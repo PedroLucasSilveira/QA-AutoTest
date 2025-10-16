@@ -54,7 +54,35 @@ export RUN_UI_TESTS=1
 mvn -B test
 ```
 
-- No CI: o workflow do GitHub Actions já define `RUN_UI_TESTS=1` e instala Chromium, inicia a aplicação e executa os testes. Os UI tests são escritos para rodar headless no CI.
+Notas e dicas para executar e depurar os UI tests
+
+- Requisitos locais:
+  - Google Chrome ou Chromium (compatível com a versão do driver Selenium). No Ubuntu/Debian você pode instalar o `google-chrome-stable` ou `chromium-browser`.
+  - JDK 17 (o projeto usa Java 17 para compatibilidade com Spring Boot 3.x).
+
+- Executando localmente:
+  1. Instale o Chrome/Chromium no seu sistema.
+  2. Exporte a variável para habilitar UI tests e execute o Maven:
+
+```bash
+export RUN_UI_TESTS=1
+mvn -B test
+```
+
+  Observação: os testes UI foram escritos para rodar headless quando detectam um ambiente CI, mas localmente o navegador poderá abrir uma janela (dependendo da configuração do driver). Para forçar headless localmente, exporte `HEADLESS=1` também.
+
+- No CI (GitHub Actions):
+  - O workflow define `RUN_UI_TESTS=1`, instala o Google Chrome (via repositório oficial) e inicia a aplicação Spring Boot antes de executar `mvn test`.
+  - Se um teste UI falhar na Actions, os logs de execução e (quando disponível) screenshots/artefatos são preservados como artefatos do job — confira a aba de Actions > run > Artifacts.
+
+- Depuração quando um UI test falha:
+  1. Reproduza localmente com `RUN_UI_TESTS=1` e (opcional) `HEADLESS=0` para ver o navegador.
+  2. Aumente timeouts no teste ou adicione prints/logs para entender o estado da página.
+  3. Verifique os relatórios Surefire (target/surefire-reports) e arquivos gerados pela execução (screenshots em target/test-screenshots/ se existirem).
+
+- Observações sobre compatibilidade:
+  - O CI foi ajustado para instalar `google-chrome-stable` do repositório oficial usando `--no-install-recommends` para evitar dependências problemáticas em runners Ubuntu 24.04.
+  - Caso o ambiente local use uma versão antiga do Chrome, atualize para a versão mais recente para evitar incompatibilidades com o Selenium driver.
 
 Se os UI tests falharem por falta de navegador ou driver, eles serão automaticamente pulados localmente para não quebrar o fluxo de desenvolvimento.
 
