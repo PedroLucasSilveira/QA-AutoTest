@@ -6,7 +6,11 @@
 </head>
 <body>
 <h1>User Detail</h1>
-<pre id="user-detail">[[${detail}]]</pre>
+<div id="user-detail">
+    <p>ID: <span th:text="${user.id}">ID</span></p>
+    <p>Name: <span th:text="${user.name}">Name</span></p>
+    <p>Email: <span th:text="${user.email}">Email</span></p>
+</div>
 <a href="/users">Back</a>
 </body>
 </html>

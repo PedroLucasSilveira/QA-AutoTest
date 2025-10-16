@@ -7,6 +7,24 @@
 <body>
 <h1>Users</h1>
 <a href="/users/new">Create new</a>
-<pre id="users-list">[[${users}]]</pre>
+<table id="users-table" border="1">
+    <thead>
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Link</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="u : ${users}">
+        <td th:text="${u.id}">ID</td>
+        <td th:text="${u.name}">Name</td>
+        <td th:text="${u.email}">Email</td>
+        <td>
+            <a th:href="@{/users/{id}(id=${u.id})}">View</a>
+            <a th:href="@{/users/{id}/edit(id=${u.id})}">Edit</a>
+            <form th:action="@{/users/{id}/delete(id=${u.id})}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

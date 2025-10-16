@@ -29,9 +29,27 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable int id, Model model) {
+        model.addAttribute("user", userService.findById(id).orElse(null));
+        return "users/edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String edit(@PathVariable int id, @RequestParam String name, @RequestParam String email) {
+        userService.updateUser(id, name, email);
+        return "redirect:/users/" + id;
+    }
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable int id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
+
     @GetMapping("/{id}")
     public String detail(@PathVariable int id, Model model) {
-        model.addAttribute("detail", userService.readUser(id));
+        model.addAttribute("user", userService.findById(id).orElse(null));
         return "users/detail";
     }
 }

@@ -43,6 +43,21 @@ mvn -q -Dexec.mainClass="com.example.UserCrud" compile exec:java -Dexec.args="< 
 
 Observação: os scripts antigos em `Tests_Sistem_Crud` foram mantidos para referência, mas o fluxo recomendado agora é via Maven/JUnit.
 
+### UI tests (Selenium)
+
+Este projeto inclui testes de UI baseados em Selenium que exercitam uma pequena UI web (Spring Boot + Thymeleaf).
+
+- Localmente: é necessário ter um navegador Chrome/Chromium instalado. Se quiser forçar a execução dos UI tests localmente, exporte a variável de ambiente `RUN_UI_TESTS=1` antes de rodar os testes:
+
+```bash
+export RUN_UI_TESTS=1
+mvn -B test
+```
+
+- No CI: o workflow do GitHub Actions já define `RUN_UI_TESTS=1` e instala Chromium, inicia a aplicação e executa os testes. Os UI tests são escritos para rodar headless no CI.
+
+Se os UI tests falharem por falta de navegador ou driver, eles serão automaticamente pulados localmente para não quebrar o fluxo de desenvolvimento.
+
 ## Desenvolvimento
 
 Se quiser recompilar o código Java (é necessário ter o `UserCrud.java` atualizado):

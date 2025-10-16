@@ -42,15 +42,11 @@ public class UserService {
         return "SUCESSO: Usuario deletado -> " + removedUser.toString();
     }
 
-    public String listAllUsers() {
-        if (userDatabase.isEmpty()) {
-            return "INFO: Nenhum usuario cadastrado.";
-        }
-        StringBuilder sb = new StringBuilder("--- Lista de Todos os Usuarios ---\n");
-        for (User user : userDatabase.values()) {
-            sb.append(user.toString()).append("\n");
-        }
-        sb.append("---------------------------------\n");
-        return sb.toString();
+    public java.util.List<User> listAllUsers() {
+        return new java.util.ArrayList<>(userDatabase.values());
+    }
+
+    public java.util.Optional<User> findById(int id) {
+        return java.util.Optional.ofNullable(userDatabase.get(id));
     }
 }

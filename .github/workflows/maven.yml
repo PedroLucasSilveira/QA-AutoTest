@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RUN_UI_TESTS: "1"
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 11
@@ -17,22 +19,26 @@ jobs:
           distribution: temurin
           java-version: '11'
       - name: Install Chromium
-        run: sudo apt-get update && sudo apt-get install -y chromium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium
 
-      - name: Build package
+      - name: Build package (without tests)
         run: mvn -B package -DskipTests
 
       - name: Start application (background)
-        run: java -jar target/qa-autotest-0.1.0.jar &
+        run: nohup java -jar target/qa-autotest-0.1.0.jar &>/dev/null &
 
       - name: Wait for app to be ready
         run: |
-          for i in {1..20}; do
+          for i in {1..30}; do
             if curl -sS http://localhost:8080/ >/dev/null; then
               echo "app up"; break
             fi
             sleep 1
           done
 
-      - name: Run tests
+      - name: Run tests (including UI tests)
+        env:
+          RUN_UI_TESTS: "1"
         run: mvn -B test
