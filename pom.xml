@@ -51,6 +51,8 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- (devtools dependency removed because artifact was not resolvable in Maven Central) -->
+
         <!-- Selenide optional (commented):
         <dependency>
           <groupId>com.codeborne</groupId>

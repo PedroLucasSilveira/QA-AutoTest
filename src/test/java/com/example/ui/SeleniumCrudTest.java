@@ -4,6 +4,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,6 +24,8 @@ public class SeleniumCrudTest {
 
     private static WebDriver driver;
     private static java.nio.file.Path userDataDir;
+
+    // Screenshot capture is provided by a ServiceLoader-registered extension (ScreenshotOnFailureExtension)
 
     @BeforeAll
     public static void setupClass() throws Exception {
