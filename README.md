@@ -21,26 +21,27 @@ Estrutura principal:
 
 ## Como executar os testes
 
-1. Abra um terminal na raiz do repositório (`/workspaces/QA-AutoTest`).
-2. Certifique-se de ter o Java disponível:
+Recomendo usar Maven para build e testes automáticos. A raiz do projeto já contém um `pom.xml`.
+
+1. Verifique sua versão do Java compatível (11+):
 
 ```bash
 java -version
 ```
 
-3. Torne os scripts executáveis (se necessário) e execute todos os testes:
+2. Rodar os testes unitários com Maven:
 
 ```bash
-cd Tests_Sistem_Crud
-chmod +x run_all_tests.sh
-./run_all_tests.sh
+mvn -B test
 ```
 
-4. Para executar um teste individual, por exemplo o de criação/consulta:
+3. Para executar a aplicação console (modo antigo) diretamente via Maven/Exec plugin, você pode compilar e executar apontando stdin:
 
 ```bash
-./test_create_and_read_success.sh
+mvn -q -Dexec.mainClass="com.example.UserCrud" compile exec:java -Dexec.args="< input.txt"
 ```
+
+Observação: os scripts antigos em `Tests_Sistem_Crud` foram mantidos para referência, mas o fluxo recomendado agora é via Maven/JUnit.
 
 ## Desenvolvimento
 
@@ -63,11 +64,4 @@ Os scripts em `Tests_Sistem_Crud` executam binários Java e verificam saídas si
 3. Compile (`javac`) e execute os scripts.
 4. Abra um pull request com descrição clara do que foi alterado.
 
-## Observações
 
-- As classes `.class` já estão incluídas no repositório; se houver diferença de versão do JDK, recompile localmente.
-- Se precisar que eu crie um passo a passo para configurar um ambiente de CI (GitHub Actions) para rodar esses testes automaticamente, diga qual runner prefere (Ubuntu/macOS) e eu gero o workflow.
-
----
-
-Arquivo gerado automaticamente por assistente — atualize conforme necessário.

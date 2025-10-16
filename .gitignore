@@ -1,0 +1,16 @@
+# Build
+/target/
+*.class
+
+# IDE
+.idea/
+*.iml
+
+# Python virtualenv
+venv/
+
+# Mac
+.DS_Store
+
+# Logs
+.log
