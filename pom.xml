@@ -11,6 +11,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!-- Spring Boot Web + Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -19,16 +29,36 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Selenium (opcional): incluído aqui para quando houver UI web -->
+        <!-- Spring Boot test helpers -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Selenium: para testes de UI -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.13.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Selenide optional (commented):
+        <dependency>
+          <groupId>com.codeborne</groupId>
+          <artifactId>selenide</artifactId>
+          <version>6.18.0</version>
+          <scope>test</scope>
+        </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

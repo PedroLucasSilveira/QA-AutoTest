@@ -1,8 +1,11 @@
 package com.example;
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class UserService {
     private final Map<Integer, User> userDatabase = new HashMap<>();
 
